@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Status Check page</title>
+    <style>
+
+    body{
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+    }
+      .good{
+        display: inline-block;
+        background-color:lightgreen;
+        width:70%;
+        margin-top:80px;
+        height:200px;
+      }
+
+      .bad{
+        display: inline-block;
+        background-color:red;
+        width:70%;
+        margin-top:80px;
+        height:200px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Logo -->
+    <div style="text-align: center">
+      <div style="display: inline-block;">Logo goes here</div>
+    </div>
+    <!-- First check -->
+    <div style="text-align: center;">
+      <div id="first" class="good">
+        <div>deanhume.com</div>
+        <div id="firstResponse"></div>
+      </div>
+    </div>
+    <!-- Second check -->
+    <div style="text-align: center; ">
+      <div id="second" class="good">
+        deanhume.com
+        <div id="secondResponse"></div>
+      </div>
+    </div>
+    <!-- Third check -->
+    <div style="text-align: center; ">
+      <div id="third" class="good">
+        deanhume.com
+        <div id="thirdResponse"></div>
+      </div>
+    </div>
+
+    <script>
+    var frequency = 10000;
+
+    setInterval(function(){ checkStatus('http://cors.io/?u=http://deanhume.com', first, firstResponse); }, frequency);
+    setInterval(function(){ checkStatus('http://cors.io/?u=https://deanhume.github.io/beer/index.html', second, secondResponse); }, frequency + 1000);
+    setInterval(function(){ checkStatus('http://cors.io/?u=https://www.buildingstartupteams.com/', third, thirdResponse); }, frequency + 2000);
+
+    function checkStatus(urlToRequest, element, responseElement) {
+      var startTime = new Date(); // How long did it take to respond
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (xhttp.readyState == 4 && xhttp.status == 200) {
+            // Success
+            element.className = 'good';
+            responseElement.innerHTML = new Date().getTime() - startTime;
+          }
+          else{
+            element.className = 'bad';
+          }
+        };
+        xhttp.open("GET", urlToRequest, true);
+        xhttp.send();
+    }
+    </script>
+  </body>
+</html>
